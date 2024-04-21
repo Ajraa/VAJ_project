@@ -15,17 +15,17 @@ model User {
   email String
   username String
   password String
-  sentPosts Post[] @relation("SentPosts")
-  receivedPosts Post[] @relation("ReceivedPosts")
+  sentEmails Email[] @relation("SentEmails")
+  receivedEmails Email[] @relation("ReceivedEmails")
 }
 
-model Post {
+model Email {
   id Int @id @default(autoincrement())
   title String
   content String
-  from User @relation("SentPosts", fields: [fromId], references: [id])
+  from User @relation("SentEmails", fields: [fromId], references: [id])
   fromId Int
-  to User @relation("ReceivedPosts", fields: [toId], references: [id])
+  to User @relation("ReceivedEmails", fields: [toId], references: [id])
   toId Int
   deleted Boolean
 }
