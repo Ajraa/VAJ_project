@@ -27,5 +27,5 @@ model Email {
   fromId Int
   to User @relation("ReceivedEmails", fields: [toId], references: [id])
   toId Int
-  deleted Boolean
+  deleted Boolean @default(false)
 }
