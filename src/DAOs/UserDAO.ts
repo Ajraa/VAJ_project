@@ -1,4 +1,4 @@
-import { PrismaClient, Prisma, User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
 
 export class UserDAO {
