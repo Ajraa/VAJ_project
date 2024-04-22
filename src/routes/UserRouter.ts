@@ -50,8 +50,16 @@ export class UserRouter {
       const password: string = req.query.password as string;
       const email: string = req.query.email as string;
 
-      if(!username || !password || !email)
-        return res.status(400).json(new ServerResponse<User>(400, "Username, password and email are required", null));
+      if (!username || !password || !email)
+        return res
+          .status(400)
+          .json(
+            new ServerResponse<User>(
+              400,
+              "Username, password and email are required",
+              null,
+            ),
+          );
 
       await this._dao
         .createUser(username, password, email)
@@ -65,15 +73,17 @@ export class UserRouter {
   private getUserByIdRoute(): void {
     this._router.get("/:id", async (req: Request, res: Response) => {
       let id: number;
-      try {  id = parseInt(req.params.id); }
-      catch (e)
-      {
+      try {
+        id = parseInt(req.params.id);
+      } catch (e) {
         this.processError(e as Error, res);
         return;
       }
 
-      if(!id)
-        return res.status(400).json(new ServerResponse<User>(400, "Id is required", null));
+      if (!id)
+        return res
+          .status(400)
+          .json(new ServerResponse<User>(400, "Id is required", null));
 
       await this._dao
         .getUserById(id)
