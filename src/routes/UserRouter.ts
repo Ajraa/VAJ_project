@@ -1,4 +1,4 @@
-import express, { Express, Router, Request, Response } from "express";
+import express, { Router, Request, Response } from "express";
 import { UserDAO } from "../DAOs/UserDAO";
 import { User } from "@prisma/client";
 
