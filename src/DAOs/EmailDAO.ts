@@ -72,21 +72,22 @@ export class EmailDAO {
   }
 
   public async markDeleted(id: number): Promise<ServerResponse<Email>> {
-    return await this._emails.update({
-      where: {
-        id: id,
-      },
-      data: {
-        deleted: true,
-      },
-    })
-    .then(email => {
-      return new ServerResponse<Email>(200, "Email mark as deleted", email);
-    })
-    .catch((err) => {
-      if (err instanceof Error) console.log(err.message);
-      return new ServerResponse<Email>(500, "Server side error", null);
-    });
+    return await this._emails
+      .update({
+        where: {
+          id: id,
+        },
+        data: {
+          deleted: true,
+        },
+      })
+      .then((email) => {
+        return new ServerResponse<Email>(200, "Email mark as deleted", email);
+      })
+      .catch((err) => {
+        if (err instanceof Error) console.log(err.message);
+        return new ServerResponse<Email>(500, "Server side error", null);
+      });
   }
 
   public async deleteEmail(
@@ -110,20 +111,21 @@ export class EmailDAO {
   }
 
   public async markRead(id: number): Promise<ServerResponse<Email>> {
-    return await this._emails.update({
-      where: {
-        id: id,
-      },
-      data: {
-        read: true,
-      }
-    })
-    .then(email => {
-      return new ServerResponse<Email>(200, "Email changed to read", email);
-    })
-    .catch((err) => {
-      if (err instanceof Error) console.log(err.message);
-      return new ServerResponse<Email>(500, "Server side error", null);
-    });
+    return await this._emails
+      .update({
+        where: {
+          id: id,
+        },
+        data: {
+          read: true,
+        },
+      })
+      .then((email) => {
+        return new ServerResponse<Email>(200, "Email changed to read", email);
+      })
+      .catch((err) => {
+        if (err instanceof Error) console.log(err.message);
+        return new ServerResponse<Email>(500, "Server side error", null);
+      });
   }
 }

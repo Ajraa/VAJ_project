@@ -39,37 +39,31 @@ export class UserDAO {
     password: string,
     email: string,
   ): Promise<ServerResponse<User>> {
-    try
-    {
+    try {
       return await this._users
-      .create({
-        data: {
-          username: username,
-          password: password,
-          email: email,
-        },
-      })
-      .then((user) => {
-        return new ServerResponse<User>(200, "User created", user);
-      })
-      .catch((err) => {
-        if (err instanceof Prisma.PrismaClientKnownRequestError) {
-          console.log(err.message);
-          return new ServerResponse<User>(400, "Name has to be unique", null);
-        }
-        else {
-          console.log(err.message);
-          return new ServerResponse<User>(500, "Server side error", null);
-        }
-      });
-    }
-    catch(err)
-    {
-      console.log('error');
-      if (err instanceof Error) 
-        console.log(typeof(err));
+        .create({
+          data: {
+            username: username,
+            password: password,
+            email: email,
+          },
+        })
+        .then((user) => {
+          return new ServerResponse<User>(200, "User created", user);
+        })
+        .catch((err) => {
+          if (err instanceof Prisma.PrismaClientKnownRequestError) {
+            console.log(err.message);
+            return new ServerResponse<User>(400, "Name has to be unique", null);
+          } else {
+            console.log(err.message);
+            return new ServerResponse<User>(500, "Server side error", null);
+          }
+        });
+    } catch (err) {
+      console.log("error");
+      if (err instanceof Error) console.log(typeof err);
       return new ServerResponse<User>(500, "Server side error", null);
-      
     }
   }
 

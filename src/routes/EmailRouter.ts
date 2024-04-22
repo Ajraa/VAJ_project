@@ -57,36 +57,43 @@ export class EmailRouter {
   }
 
   private loadDeletedEmailsRoute(): void {
-    this._router.get("/loaddeleted/:id", async (req: Request, res: Response) => {
-      const id: number = parseInt(req.params.id);
-      if (!id)
-        return res
-          .status(400)
-          .json(new ServerResponse<Email>(400, "Id is required", null));
+    this._router.get(
+      "/loaddeleted/:id",
+      async (req: Request, res: Response) => {
+        const id: number = parseInt(req.params.id);
+        if (!id)
+          return res
+            .status(400)
+            .json(new ServerResponse<Email>(400, "Id is required", null));
 
-      await this._dao
-        .loadDeletedEmails(id)
-        .then((sres) => {
-          res.status(sres.code).json(sres);
-        })
-        .catch((err) => this.processError(err, res));
-    });
+        await this._dao
+          .loadDeletedEmails(id)
+          .then((sres) => {
+            res.status(sres.code).json(sres);
+          })
+          .catch((err) => this.processError(err, res));
+      },
+    );
   }
 
   private markDeletedRoute(): void {
-    this._router.put("/markdeleted/:id", async (req: Request, res: Response) => {
-      const id: number = parseInt(req.params.id);
-      if (!id)
-        return res
-          .status(400)
-          .json(new ServerResponse<Email>(400, "Id is required", null));
+    this._router.put(
+      "/markdeleted/:id",
+      async (req: Request, res: Response) => {
+        const id: number = parseInt(req.params.id);
+        if (!id)
+          return res
+            .status(400)
+            .json(new ServerResponse<Email>(400, "Id is required", null));
 
-      await this._dao.markDeleted(id)
-      .then(sres => {
-        res.status(sres.code).json(sres);
-      })
-      .catch((err) => this.processError(err, res));
-    });
+        await this._dao
+          .markDeleted(id)
+          .then((sres) => {
+            res.status(sres.code).json(sres);
+          })
+          .catch((err) => this.processError(err, res));
+      },
+    );
   }
 
   private deleteEmailRoute(): void {
@@ -116,13 +123,14 @@ export class EmailRouter {
 
   private markReadRoute(): void {
     this._router.put("/markread/:id", async (req: Request, res: Response) => {
-      const id: number = parseInt(req.params.id); 
+      const id: number = parseInt(req.params.id);
 
-      this._dao.markRead(id)
-      .then(sres => {
-        res.status(sres.code).json(sres);
-      })
-      .catch((err) => this.processError(err, res));
+      this._dao
+        .markRead(id)
+        .then((sres) => {
+          res.status(sres.code).json(sres);
+        })
+        .catch((err) => this.processError(err, res));
     });
   }
 
