@@ -70,7 +70,7 @@ export class EmailDAO {
       });
   }
 
-  public async deleteMail(
+  public async deleteEmail(
     userId: number,
     mailId: number,
   ): Promise<ServerResponse<null>> {
