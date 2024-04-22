@@ -11,21 +11,22 @@ datasource db {
 }
 
 model User {
-  id Int @id @default(autoincrement())
-  email String
-  username String
-  password String
-  sentEmails Email[] @relation("SentEmails")
+  id             Int     @id @default(autoincrement())
+  email          String
+  username       String
+  password       String
+  sentEmails     Email[] @relation("SentEmails")
   receivedEmails Email[] @relation("ReceivedEmails")
 }
 
 model Email {
-  id Int @id @default(autoincrement())
-  title String
+  id      Int     @id @default(autoincrement())
+  title   String
   content String
-  from User @relation("SentEmails", fields: [fromId], references: [id])
-  fromId Int
-  to User @relation("ReceivedEmails", fields: [toId], references: [id])
-  toId Int
+  from    User    @relation("SentEmails", fields: [fromId], references: [id])
+  fromId  Int
+  to      User    @relation("ReceivedEmails", fields: [toId], references: [id])
+  toId    Int
   deleted Boolean @default(false)
+  read    Boolean @default(false)
 }
