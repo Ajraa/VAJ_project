@@ -49,18 +49,19 @@ export class UserRouter {
     this._router.post("/createUser", async (req: Request, res: Response) => {
       const username: string = req.query.username as string;
       const password: string = req.query.password as string;
-      const email: string = req.query.email as string;
 
-      if (!username || !password || !email)
+      if (!username || !password)
         return res
           .status(400)
           .json(
             new ServerResponse<User>(
               400,
-              "Username, password and email are required",
+              "Username and password are required",
               null,
             ),
           );
+
+      const email: string = `${username}@vsb.cz`;
 
       await this._dao
         .createUser(username, password, email)
