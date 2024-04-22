@@ -16,3 +16,8 @@ const emailRouter = new EmailRouter(emailDAO);
 
 app.use("/user", userRouter.router);
 app.use("/email", emailRouter.router);
+
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+  });
