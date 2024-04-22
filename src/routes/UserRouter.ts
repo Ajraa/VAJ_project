@@ -5,6 +5,7 @@ import { User } from "@prisma/client";
 export class UserRouter {
   private _router: Router;
   private _dao: UserDAO;
+  
   constructor(dao: UserDAO) {
     this._router = express.Router();
     this._dao = dao;
@@ -59,7 +60,7 @@ export class UserRouter {
   }
 
   private getUserByIdRoute(): void {
-    this._router.post("/:id", async (req: Request, res: Response) => {
+    this._router.get("/:id", async (req: Request, res: Response) => {
       const id: number = parseInt(req.params.id);
 
       await this._dao
