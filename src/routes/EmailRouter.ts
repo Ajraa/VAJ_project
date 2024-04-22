@@ -15,7 +15,8 @@ export class EmailRouter {
     this.loadActiveEmailRoute();
     this.loadDeletedEmailsRoute();
     this.deleteEmailRoute();
-    this.markDeleted();
+    this.markDeletedRoute();
+    this.markReadRoute();
   }
 
   public get router() {
@@ -72,7 +73,7 @@ export class EmailRouter {
     });
   }
 
-  private markDeleted(): void {
+  private markDeletedRoute(): void {
     this._router.put("/markdeleted/:id", async (req: Request, res: Response) => {
       const id: number = parseInt(req.params.id);
       if (!id)
@@ -110,6 +111,18 @@ export class EmailRouter {
           res.status(sres.code).json(sres);
         })
         .catch((err) => this.processError(err, res));
+    });
+  }
+
+  private markReadRoute(): void {
+    this._router.put("/markread/:id", async (req: Request, res: Response) => {
+      const id: number = parseInt(req.params.id); 
+
+      this._dao.markRead(id)
+      .then(sres => {
+        res.status(sres.code).json(sres);
+      })
+      .catch((err) => this.processError(err, res));
     });
   }
 
