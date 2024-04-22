@@ -5,7 +5,7 @@ import { User } from "@prisma/client";
 export class UserRouter {
   private _router: Router;
   private _dao: UserDAO;
-  
+
   constructor(dao: UserDAO) {
     this._router = express.Router();
     this._dao = dao;
@@ -50,6 +50,9 @@ export class UserRouter {
       const password: string = req.query.password as string;
       const email: string = req.query.email as string;
 
+      if(!username || !password || !email)
+        return res.status(400).json(new ServerResponse<User>(400, "Username, password and email are required", null));
+
       await this._dao
         .createUser(username, password, email)
         .then((sres) => {
@@ -62,6 +65,9 @@ export class UserRouter {
   private getUserByIdRoute(): void {
     this._router.get("/:id", async (req: Request, res: Response) => {
       const id: number = parseInt(req.params.id);
+
+      if(!id)
+        return res.status(400).json(new ServerResponse<User>(400, "Id is required", null));
 
       await this._dao
         .getUserById(id)
