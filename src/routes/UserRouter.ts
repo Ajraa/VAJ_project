@@ -72,15 +72,8 @@ export class UserRouter {
   }
 
   private getUserByIdRoute(): void {
-    this._router.get("/:id", async (req: Request, res: Response) => {
-      let id: number;
-      try {
-        id = parseInt(req.params.id);
-      } catch (e) {
-        this.processError(e as Error, res);
-        return;
-      }
-
+    this._router.get("/getUser/:id", async (req: Request, res: Response) => {
+      const id: number = parseInt(req.params.id);      
       if (!id)
         return res
           .status(400)
