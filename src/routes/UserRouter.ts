@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from "express";
 import { UserDAO } from "../DAOs/UserDAO";
 import { User } from "@prisma/client";
+import { ServerResponse } from "../ServerResponse";
 
 export class UserRouter {
   private _router: Router;

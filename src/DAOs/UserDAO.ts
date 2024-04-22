@@ -1,5 +1,6 @@
 import { Prisma, User } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
+import { ServerResponse } from "../ServerResponse";
 
 export class UserDAO {
   private _users: Prisma.UserDelegate;

@@ -1,4 +1,4 @@
-class ServerResponse<T> {
+export class ServerResponse<T> {
   public code: number;
   public message: string;
   public obj: T | null;

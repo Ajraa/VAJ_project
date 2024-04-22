@@ -1,5 +1,6 @@
 import { Prisma, Email } from "@prisma/client";
 import { DefaultArgs } from "@prisma/client/runtime/library";
+import { ServerResponse } from "../ServerResponse";
 
 export class EmailDAO {
   private _emails: Prisma.EmailDelegate<DefaultArgs>;

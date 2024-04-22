@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from "express";
 import { EmailDAO } from "../DAOs/EmailDAO";
 import { Email } from "@prisma/client";
+import { ServerResponse } from "../ServerResponse";
 
 export class EmailRouter {
   private _router: Router;
