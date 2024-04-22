@@ -47,7 +47,7 @@ export class UserDAO {
         },
       })
       .then((user) => {
-        return new ServerResponse<User>(200, "User found", user);
+        return new ServerResponse<User>(200, "User created", user);
       })
       .catch((err) => {
         if (err instanceof Error) console.log(err.message);
