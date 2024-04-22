@@ -64,7 +64,13 @@ export class UserRouter {
 
   private getUserByIdRoute(): void {
     this._router.get("/:id", async (req: Request, res: Response) => {
-      const id: number = parseInt(req.params.id);
+      let id: number;
+      try {  id = parseInt(req.params.id); }
+      catch (e)
+      {
+        this.processError(e as Error, res);
+        return;
+      }
 
       if(!id)
         return res.status(400).json(new ServerResponse<User>(400, "Id is required", null));
