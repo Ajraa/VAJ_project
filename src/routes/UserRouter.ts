@@ -14,6 +14,7 @@ export class UserRouter {
     this.loginRoute();
     this.createUserRoute();
     this.getUserByIdRoute();
+    this.getUserByEmailRoute();
   }
 
   public get router() {
@@ -73,7 +74,7 @@ export class UserRouter {
   }
 
   private getUserByIdRoute(): void {
-    this._router.get("/getUser/:id", async (req: Request, res: Response) => {
+    this._router.get("/getUserById/:id", async (req: Request, res: Response) => {
       const id: number = parseInt(req.params.id);      
       if (!id)
         return res
@@ -82,6 +83,24 @@ export class UserRouter {
 
       await this._dao
         .getUserById(id)
+        .then((sres) => {
+          return res.status(sres.code).json(sres);
+        })
+        .catch((err) => this.processError(err, res));
+    });
+  }
+
+  private getUserByEmailRoute(): void {
+    this._router.get("/getUserByEmail/:email", async (req: Request, res: Response) => {
+      const email: string = req.params.email as string;   
+      console.log(email);
+      if (!email)
+        return res
+          .status(400)
+          .json(new ServerResponse<User>(400, "Id is required", null));
+
+      await this._dao
+        .getUserByEmail(email)
         .then((sres) => {
           return res.status(sres.code).json(sres);
         })

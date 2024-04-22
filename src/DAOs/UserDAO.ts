@@ -93,4 +93,25 @@ export class UserDAO {
       return new ServerResponse<User>(500, "Server side error", null);
     }
   }
+
+  public async getUserByEmail(email: string) {
+    try {
+      return await this._users
+        .findFirstOrThrow({
+          where: {
+            email: email,
+          },
+        })
+        .then((user) => {
+          return new ServerResponse<User>(200, "User found", user);
+        });
+    } catch (err) {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        console.log(err.message);
+        return new ServerResponse<User>(404, "User not found", null);
+      } else if (err instanceof Error) console.log(err.message);
+
+      return new ServerResponse<User>(500, "Server side error", null);
+    }
+  }
 }
