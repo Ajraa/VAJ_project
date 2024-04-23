@@ -34,6 +34,24 @@ export class UserDAO {
     }
   }
 
+  public async changePassword(username: string, password: string) {
+    return await this._users.update({
+      where: {
+        username: username,
+      },
+      data: {
+        password: password
+      }
+    })
+    .then(user => {
+      return new ServerResponse<User>(200, "Password changer", user);
+    })
+    .catch(err => {
+      if (err instanceof Error) console.log(typeof err);
+      return new ServerResponse<User>(500, "Server side error", null);
+    });
+  }
+
   public async createUser(
     username: string,
     password: string,

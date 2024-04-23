@@ -15,6 +15,7 @@ export class UserRouter {
     this.createUserRoute();
     this.getUserByIdRoute();
     this.getUserByEmailRoute();
+    this.changePasswordRoute();
   }
 
   public get router() {
@@ -43,6 +44,30 @@ export class UserRouter {
           return res.status(sres.code).json(sres);
         })
         .catch((err) => this.processError(err, res));
+    });
+  }
+
+  private changePasswordRoute(): void {
+    this._router.put("/changePassword",  async (req: Request, res: Response) => {
+      const username: string = req.query.username as string;
+      const password: string = req.query.password as string;
+
+      if (!username || !password)
+        return res
+          .status(400)
+          .json(
+            new ServerResponse<User>(
+              400,
+              "Username and password are required",
+              null,
+            ),
+          );
+
+      await this._dao.changePassword(username, password)
+      .then(sres => {
+        res.status(sres.code).json(sres);
+      })
+      .catch((err) => this.processError(err, res));
     });
   }
 

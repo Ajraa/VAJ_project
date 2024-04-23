@@ -4,6 +4,7 @@ import { UserDAO } from "./DAOs/UserDAO";
 import { EmailDAO } from "./DAOs/EmailDAO";
 import { UserRouter } from "./routes/UserRouter";
 import { EmailRouter } from "./routes/EmailRouter";
+import cors from 'cors';
 
 const app: Express = express();
 const prisma = new PrismaClient();
@@ -14,8 +15,10 @@ const emailDAO = new EmailDAO(prisma.email);
 const userRouter = new UserRouter(userDAO);
 const emailRouter = new EmailRouter(emailDAO);
 
+app.use(cors());
 app.use("/user", userRouter.router);
 app.use("/email", emailRouter.router);
+
 
 const port = 3000;
 app.listen(port, () => {
