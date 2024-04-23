@@ -128,4 +128,20 @@ export class EmailDAO {
         return new ServerResponse<Email>(500, "Server side error", null);
       });
   }
+
+  public async loadSentEmails(fromId: number): Promise<ServerResponse<Email[]>> {
+    return await this._emails
+    .findMany({
+      where: {
+        fromId: fromId
+      }
+    })
+    .then(emails => {
+      return new ServerResponse<Email[]>(200, "Emails found", emails);
+    })
+    .catch(err => {
+      if (err instanceof Error) console.log(err.message);
+        return new ServerResponse<Email[]>(500, "Server side error", null);
+    })
+  }
 }

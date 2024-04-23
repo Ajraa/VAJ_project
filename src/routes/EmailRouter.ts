@@ -17,6 +17,7 @@ export class EmailRouter {
     this.deleteEmailRoute();
     this.markDeletedRoute();
     this.markReadRoute();
+    this.loadSentEmailsRoute();
   }
 
   public get router() {
@@ -74,6 +75,21 @@ export class EmailRouter {
           .catch((err) => this.processError(err, res));
       },
     );
+  }
+
+  private loadSentEmailsRoute(): void {
+    this._router.get("/loadsent/:id", async (req: Request, res: Response) => {
+      const id: number = parseInt(req.params.id);
+        if (!id)
+          return res
+            .status(400)
+            .json(new ServerResponse<Email[]>(400, "Id is required", null)); 
+      await this._dao.loadSentEmails(id)
+      .then(sres => {
+        res.status(sres.code).json(sres);
+      })
+      .catch((err) => this.processError(err, res));
+    });
   }
 
   private markDeletedRoute(): void {
