@@ -91,14 +91,12 @@ export class EmailDAO {
   }
 
   public async deleteEmail(
-    userId: number,
-    mailId: number,
+    id: number,
   ): Promise<ServerResponse<null>> {
     return await this._emails
       .delete({
         where: {
-          toId: userId,
-          id: mailId,
+          id: id,
         },
       })
       .then(() => {

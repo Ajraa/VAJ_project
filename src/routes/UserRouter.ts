@@ -122,6 +122,7 @@ export class UserRouter {
     this._router.get(
       "/getUserByEmail/:email",
       async (req: Request, res: Response) => {
+        console.log(req.params);
         const email: string = req.params.email as string;
         console.log(email);
         if (!email)

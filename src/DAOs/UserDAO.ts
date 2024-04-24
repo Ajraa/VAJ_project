@@ -108,6 +108,7 @@ export class UserDAO {
 
   public async getUserByEmail(email: string) {
     try {
+      console.log(email);
       return await this._users
         .findFirstOrThrow({
           where: {

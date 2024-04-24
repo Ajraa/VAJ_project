@@ -113,23 +113,22 @@ export class EmailRouter {
   }
 
   private deleteEmailRoute(): void {
-    this._router.delete("/delete", async (req: Request, res: Response) => {
-      const userId: number = parseInt(req.query.userId as string);
-      const mailId: number = parseInt(req.query.mailId as string);
+    this._router.delete("/delete/:id", async (req: Request, res: Response) => {
+      const id: number = parseInt(req.params.id);
 
-      if (!userId || !mailId)
+      if (!id)
         return res
           .status(400)
           .json(
             new ServerResponse<Email>(
               400,
-              "UserId and mailID are required",
+              "Id is required",
               null,
             ),
           );
 
       await this._dao
-        .deleteEmail(userId, mailId)
+        .deleteEmail(id)
         .then((sres) => {
           res.status(sres.code).json(sres);
         })
